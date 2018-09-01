@@ -1,23 +1,39 @@
 tool
-extends EditorPlugin
+extends Node
 
-var codex_menu
+const unlock_file_datapath = "user://unlocked_entries.matrix"
 
-const TOOL_MENU_LABEL = "Matrix Codex"
-
-func _ready():
-	add_custom_type("CodexEntry", "Resource", load("res://addons/matrix_codex/entry.gd"), preload("res://addons/matrix_codex/ArcaniteLogo.png"))
+static func get_unlock_data():
+	var file = File.new()
 	
-	codex_menu = preload("res://addons/matrix_codex/CodexMenu.tscn").instance()
-	get_editor_interface().get_base_control().add_child(codex_menu)
-	codex_menu.visible = false
-	add_tool_menu_item(TOOL_MENU_LABEL, self, "_open_codex")
+	if file.file_exists(unlock_file_datapath):
+		file.open(unlock_file_datapath, file.READ)
+		var content = file.get_as_text()
+		file.close()
+		return parse_json(content)
+	else:
+		return []
 
-func _exit_tree():
-	remove_custom_type("CodexEntry")
-	remove_tool_menu_item(TOOL_MENU_LABEL)
-	codex_menu.queue_free()
+static func set_unlock_data(data):
+	var file = File.new()
+	
+	file.open(unlock_file_datapath, file.WRITE)
+	file.store_string(to_json(data))
+	file.close()
+	
+	print("Unlocks updated.")
 
-func _open_codex(ud):
-	codex_menu.popup_centered()
-	codex_menu.update_entry_list()
+static func list_all_entries():
+	var result = []
+	
+	var dir = Directory.new()
+	dir.open("res://addons/matrix_codex/entries")
+	dir.list_dir_begin(true)
+	
+	var filename = dir.get_next()
+	
+	while filename != "":
+		result.append(load("res://addons/matrix_codex/entries/" + filename))
+		filename = dir.get_next()
+	
+	return result

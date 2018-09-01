@@ -1,42 +1,43 @@
 tool
-extends WindowDialog
+extends Control
 
 var entries
+var currently_selected_entry
 
 func _ready():
 	update_entry_list()
 
 func update_entry_list():
-	$HBoxContainer/SelectionContainer/EntryList.clear()
+	$MainWindow/HBoxContainer/SelectionContainer/EntryList.clear()
 	
-	entries = get_codex_entries()
+	entries = MatrixCodex.list_all_entries()
 	
 	for entry in entries:
-		$HBoxContainer/SelectionContainer/EntryList.add_item(entry.title, entry.image)
+		$MainWindow/HBoxContainer/SelectionContainer/EntryList.add_item(entry.title, entry.image)
 
 func _on_EntryList_item_activated(index):
-	$HBoxContainer/EntryInspector/Title.text = entries[index].title
-	$HBoxContainer/EntryInspector/Image.texture = entries[index].image
-	$HBoxContainer/EntryInspector/Description.bbcode_text = entries[index].description
+	display_entry(entries[index])
 
-func get_codex_entries():
-	var result = []
-	
-	var dir = Directory.new()
-	dir.open("res://addons/matrix_codex/entries")
-	dir.list_dir_begin(true)
-	
-	var filename = dir.get_next()
-	
-	while filename != "":
-		result.append(load("res://addons/matrix_codex/entries/" + filename))
-		filename = dir.get_next()
-	
-	return result
-
+func display_entry(entry):
+	$MainWindow/HBoxContainer/EntryInspector/Title.text = entry.title
+	$MainWindow/HBoxContainer/EntryInspector/Image.texture = entry.image
+	$MainWindow/HBoxContainer/EntryInspector/Description.bbcode_text = entry.description
+	currently_selected_entry = entry
 
 func _on_NewEntryButton_pressed():
 	var new_entry = Resource.new()
-	new_entry.set_script(load("res://addons/matrix_codex/entry.gd"))
-	ResourceSaver.save("res://addons/matrix_codex/entries/new_entry.tres", new_entry)
+	new_entry.set_script(preload("res://addons/matrix_codex/entry.gd"))
+	new_entry.save()
+	currently_selected_entry = new_entry
+	_on_EditButton_pressed()
+
+func _on_EditButton_pressed():
+	if currently_selected_entry:
+		$EditorWindow.set_entry(currently_selected_entry)
+		$MainWindow.visible = false
+		$EditorWindow.popup_centered()
+
+func _on_EditorWindow_popup_hide():
+	$MainWindow.popup_centered()
 	update_entry_list()
+	display_entry($EditorWindow.entry)

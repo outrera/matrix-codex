@@ -6,11 +6,12 @@
 [resource]
 
 script = ExtResource( 2 )
+_sections_unfolded = [ "Script" ]
 __meta__ = {
 "_editor_icon": ExtResource( 1 )
 }
-id = 0
+id = 0.0
 title = "Example Entry"
 image = ExtResource( 1 )
-description = "This is an example entry. I hope you enjoy using the Matrix Codex!"
+description = "This is an example entry. Enjoy using the Matrix Codex!"
 

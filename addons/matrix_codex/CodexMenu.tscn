@@ -1,17 +1,35 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/matrix_codex/CodexMenu.gd" type="Script" id=1]
 [ext_resource path="res://addons/matrix_codex/ArcaniteLogo.png" type="Texture" id=2]
+[ext_resource path="res://addons/matrix_codex/EditorWindow.gd" type="Script" id=3]
 
-[node name="MatrixCodex" type="WindowDialog"]
+[node name="CodexMenu" type="Control"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 1 )
+_sections_unfolded = [ "Mouse" ]
+
+[node name="MainWindow" type="WindowDialog" parent="."]
+editor/display_folded = true
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -187.0
-margin_top = -130.0
-margin_right = 159.0
-margin_bottom = 129.0
+margin_left = -144.0
+margin_top = -100.0
+margin_right = 144.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 288, 200 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -19,12 +37,11 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 popup_exclusive = true
-window_title = "Codex Menu"
+window_title = "Matrix Codex"
 resizable = true
-script = ExtResource( 1 )
-_sections_unfolded = [ "Popup", "Script" ]
+_sections_unfolded = [ "Margin", "Popup", "Rect" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainWindow"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -37,18 +54,19 @@ rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
+size_flags_horizontal = 3
 size_flags_vertical = 1
 alignment = 0
-_sections_unfolded = [ "Margin" ]
+_sections_unfolded = [ "Margin", "Size Flags" ]
 
-[node name="SelectionContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="SelectionContainer" type="VBoxContainer" parent="MainWindow/HBoxContainer"]
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 167.0
-margin_bottom = 251.0
+margin_right = 138.0
+margin_bottom = 192.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -57,13 +75,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 alignment = 0
 
-[node name="EntryList" type="ItemList" parent="HBoxContainer/SelectionContainer"]
+[node name="EntryList" type="ItemList" parent="MainWindow/HBoxContainer/SelectionContainer"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 167.0
-margin_bottom = 227.0
+margin_right = 138.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 focus_mode = 2
@@ -71,21 +89,21 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-items = [  ]
+items = [ "Example Entry", ExtResource( 2 ), false, "New Entry", null, false ]
 select_mode = 0
 allow_reselect = false
 icon_mode = 1
 fixed_icon_size = Vector2( 16, 16 )
 _sections_unfolded = [ "Columns", "Icon" ]
 
-[node name="NewEntryButton" type="Button" parent="HBoxContainer/SelectionContainer"]
+[node name="NewEntryButton" type="Button" parent="MainWindow/HBoxContainer/SelectionContainer"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 231.0
-margin_right = 167.0
-margin_bottom = 251.0
+margin_top = 172.0
+margin_right = 138.0
+margin_bottom = 192.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -101,15 +119,14 @@ text = "New Entry"
 flat = false
 align = 1
 
-[node name="EntryInspector" type="VBoxContainer" parent="HBoxContainer"]
-editor/display_folded = true
+[node name="EntryInspector" type="VBoxContainer" parent="MainWindow/HBoxContainer"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 171.0
-margin_right = 338.0
-margin_bottom = 251.0
+margin_left = 142.0
+margin_right = 280.0
+margin_bottom = 192.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -119,13 +136,13 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="Image" type="TextureRect" parent="HBoxContainer/EntryInspector"]
+[node name="Image" type="TextureRect" parent="MainWindow/HBoxContainer/EntryInspector"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 167.0
-margin_bottom = 114.0
+margin_right = 138.0
+margin_bottom = 73.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -137,14 +154,14 @@ expand = true
 stretch_mode = 6
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="Title" type="Label" parent="HBoxContainer/EntryInspector"]
+[node name="Title" type="Label" parent="MainWindow/HBoxContainer/EntryInspector"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 118.0
-margin_right = 167.0
-margin_bottom = 132.0
+margin_top = 77.0
+margin_right = 138.0
+margin_bottom = 91.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -157,14 +174,14 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Description" type="RichTextLabel" parent="HBoxContainer/EntryInspector"]
+[node name="Description" type="RichTextLabel" parent="MainWindow/HBoxContainer/EntryInspector"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 136.0
-margin_right = 167.0
-margin_bottom = 251.0
+margin_top = 95.0
+margin_right = 138.0
+margin_bottom = 168.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
@@ -184,5 +201,267 @@ selection_enabled = false
 override_selected_font_color = false
 _sections_unfolded = [ "BBCode", "Size Flags" ]
 
-[connection signal="item_activated" from="HBoxContainer/SelectionContainer/EntryList" to="." method="_on_EntryList_item_activated"]
-[connection signal="pressed" from="HBoxContainer/SelectionContainer/NewEntryButton" to="." method="_on_NewEntryButton_pressed"]
+[node name="EditButton" type="Button" parent="MainWindow/HBoxContainer/EntryInspector"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 172.0
+margin_right = 138.0
+margin_bottom = 192.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Edit This Entry"
+flat = false
+align = 1
+
+[node name="EditorWindow" type="WindowDialog" parent="."]
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 371.0
+margin_top = 137.0
+margin_right = 625.0
+margin_bottom = 393.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+window_title = "Editing - ???"
+resizable = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EditorWindow"]
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="Image" type="TextureRect" parent="EditorWindow/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 254.0
+margin_bottom = 88.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="ChangeImageButton" type="Button" parent="EditorWindow/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 92.0
+margin_right = 254.0
+margin_bottom = 112.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Change Image"
+flat = false
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EditorWindow/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 116.0
+margin_right = 254.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="IDEdit" type="SpinBox" parent="EditorWindow/VBoxContainer/HBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 74.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+allow_greater = false
+allow_lesser = false
+editable = true
+prefix = ""
+suffix = ""
+_sections_unfolded = [ "Rect" ]
+
+[node name="TitleEdit" type="LineEdit" parent="EditorWindow/VBoxContainer/HBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 78.0
+margin_right = 254.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 1
+size_flags_horizontal = 3
+size_flags_vertical = 1
+secret_character = "*"
+focus_mode = 2
+context_menu_enabled = true
+clear_button_enabled = false
+placeholder_alpha = 0.6
+caret_blink = false
+caret_blink_speed = 0.65
+caret_position = 0
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="DescriptionEdit" type="TextEdit" parent="EditorWindow/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 144.0
+margin_right = 254.0
+margin_bottom = 232.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 3
+text = ""
+readonly = false
+highlight_current_line = false
+syntax_highlighting = false
+show_line_numbers = false
+breakpoint_gutter = false
+highlight_all_occurrences = false
+override_selected_font_color = false
+context_menu_enabled = true
+smooth_scrolling = false
+v_scroll_speed = 80.0
+hiding_enabled = 0
+wrap_enabled = true
+caret_block_mode = false
+caret_blink = false
+caret_blink_speed = 0.65
+caret_moving_by_right_click = true
+_sections_unfolded = [ "Size Flags" ]
+
+[node name="SaveButton" type="Button" parent="EditorWindow/VBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 236.0
+margin_right = 254.0
+margin_bottom = 256.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Save"
+flat = false
+align = 1
+
+[node name="ImageSelectDialog" type="FileDialog" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -185.5
+margin_top = -128.5
+margin_right = 185.5
+margin_bottom = 128.5
+rect_min_size = Vector2( 200, 70 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = true
+window_title = "Select an Image"
+resizable = true
+dialog_hide_on_ok = false
+mode_overrides_title = true
+mode = 0
+access = 0
+filters = PoolStringArray( "*.png", "*.jpg" )
+show_hidden_files = false
+current_dir = "res://"
+current_file = ""
+current_path = "res://"
+_sections_unfolded = [ "Popup", "filters" ]
+
+[connection signal="item_activated" from="MainWindow/HBoxContainer/SelectionContainer/EntryList" to="." method="_on_EntryList_item_activated"]
+[connection signal="pressed" from="MainWindow/HBoxContainer/SelectionContainer/NewEntryButton" to="." method="_on_NewEntryButton_pressed"]
+[connection signal="pressed" from="MainWindow/HBoxContainer/EntryInspector/EditButton" to="." method="_on_EditButton_pressed"]
+[connection signal="popup_hide" from="EditorWindow" to="." method="_on_EditorWindow_popup_hide"]
+[connection signal="pressed" from="EditorWindow/VBoxContainer/ChangeImageButton" to="EditorWindow" method="_on_ChangeImageButton_pressed"]
+[connection signal="pressed" from="EditorWindow/VBoxContainer/SaveButton" to="EditorWindow" method="_on_SaveButton_pressed"]
+[connection signal="file_selected" from="ImageSelectDialog" to="EditorWindow" method="_on_ImageSelectDialog_file_selected"]

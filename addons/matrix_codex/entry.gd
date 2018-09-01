@@ -1,14 +1,13 @@
+tool
 extends Resource
 
 export (int) var id = -1
-export (String, MULTILINE) var title = "New Entry"
+export (String) var title = "New Entry"
 export (Texture) var image
 export (String, MULTILINE) var description = "Describe the entry here!"
 
-const unlock_file_datapath = "user://unlocked_entries.matrix"
-
 func set_unlocked(unlocked):
-	var unlock_data = get_unlock_data()
+	var unlock_data = MatrixCodex.get_unlock_data()
 	
 	if unlocked:
 		# Set the entry as unlocked.
@@ -25,27 +24,15 @@ func set_unlocked(unlocked):
 		while unlock_data.has(float(id)):
 			unlock_data.erase(float(id))
 
-	set_unlock_data(unlock_data)
+	MatrixCodex.set_unlock_data(unlock_data)
 
-static func get_unlock_data():
-	var file = File.new()
+func save():
+	if !resource_path:
+		resource_path = "res://addons/matrix_codex/entries/"
 	
-	if file.file_exists(unlock_file_datapath):
-		file.open(unlock_file_datapath, file.READ)
-		var content = file.get_as_text()
-		file.close()
-		return parse_json(content)
-	else:
-		return []
-
-static func set_unlock_data(data):
-	var file = File.new()
-	
-	file.open(unlock_file_datapath, file.WRITE)
-	file.store_string(to_json(data))
-	file.close()
-	
-	print("Unlocks updated.")
-
-static func list():
-	return []
+	var save_path = resource_path.get_base_dir() + "/" + str(id) + " - " + title + ".tres"
+	var dir = Directory.new()
+	print(resource_path)
+	dir.remove(resource_path)
+	resource_path = save_path
+	ResourceSaver.save(resource_path, self)
