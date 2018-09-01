@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://addons/matrix_codex/ArcaniteLogo.png" type="Texture" id=1]
+[ext_resource path="res://addons/matrix_codex/entry.gd" type="Script" id=2]
+
+[resource]
+
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 1 )
+}
+id = 0
+title = "Example Entry"
+image = ExtResource( 1 )
+description = "This is an example entry. I hope you enjoy using the Matrix Codex!"
+

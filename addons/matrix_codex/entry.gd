@@ -46,3 +46,6 @@ static func set_unlock_data(data):
 	file.close()
 	
 	print("Unlocks updated.")
+
+static func list():
+	return []
