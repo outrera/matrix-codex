@@ -26,13 +26,20 @@ func set_unlocked(unlocked):
 
 	MatrixCodex.set_unlock_data(unlock_data)
 
+func delete():
+	var dir = Directory.new()
+	if dir.file_exists(resource_path):
+		dir.remove(resource_path)
+
 func save():
-	if !resource_path:
-		resource_path = "res://addons/matrix_codex/entries/"
+	if resource_path:
+		var dir = Directory.new()
+		if dir.file_exists(resource_path):
+			dir.remove(resource_path)
+	else:
+		resource_path = "res://addons/matrix_codex/entries/aaa"
 	
 	var save_path = resource_path.get_base_dir() + "/" + str(id) + " - " + title + ".tres"
-	var dir = Directory.new()
-	print(resource_path)
-	dir.remove(resource_path)
+	print(save_path)
 	resource_path = save_path
 	ResourceSaver.save(resource_path, self)

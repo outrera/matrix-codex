@@ -19,7 +19,6 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Mouse" ]
 
 [node name="MainWindow" type="WindowDialog" parent="."]
-editor/display_folded = true
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -60,7 +59,6 @@ alignment = 0
 _sections_unfolded = [ "Margin", "Size Flags" ]
 
 [node name="SelectionContainer" type="VBoxContainer" parent="MainWindow/HBoxContainer"]
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -96,7 +94,7 @@ icon_mode = 1
 fixed_icon_size = Vector2( 16, 16 )
 _sections_unfolded = [ "Columns", "Icon" ]
 
-[node name="NewEntryButton" type="Button" parent="MainWindow/HBoxContainer/SelectionContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainWindow/HBoxContainer/SelectionContainer"]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -106,20 +104,59 @@ margin_right = 138.0
 margin_bottom = 192.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="NewEntryButton" type="Button" parent="MainWindow/HBoxContainer/SelectionContainer/HBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 67.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
+size_flags_horizontal = 3
 size_flags_vertical = 1
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "New Entry"
+text = "New"
+flat = false
+align = 1
+
+[node name="DeleteEntryButton" type="Button" parent="MainWindow/HBoxContainer/SelectionContainer/HBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 71.0
+margin_right = 138.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Delete"
 flat = false
 align = 1
 
 [node name="EntryInspector" type="VBoxContainer" parent="MainWindow/HBoxContainer"]
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -220,7 +257,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Edit This Entry"
+text = "Edit"
 flat = false
 align = 1
 
@@ -458,8 +495,9 @@ current_file = ""
 current_path = "res://"
 _sections_unfolded = [ "Popup", "filters" ]
 
-[connection signal="item_activated" from="MainWindow/HBoxContainer/SelectionContainer/EntryList" to="." method="_on_EntryList_item_activated"]
-[connection signal="pressed" from="MainWindow/HBoxContainer/SelectionContainer/NewEntryButton" to="." method="_on_NewEntryButton_pressed"]
+[connection signal="item_selected" from="MainWindow/HBoxContainer/SelectionContainer/EntryList" to="." method="_on_EntryList_item_selected"]
+[connection signal="pressed" from="MainWindow/HBoxContainer/SelectionContainer/HBoxContainer/NewEntryButton" to="." method="_on_NewEntryButton_pressed"]
+[connection signal="pressed" from="MainWindow/HBoxContainer/SelectionContainer/HBoxContainer/DeleteEntryButton" to="." method="_on_DeleteEntryButton_pressed"]
 [connection signal="pressed" from="MainWindow/HBoxContainer/EntryInspector/EditButton" to="." method="_on_EditButton_pressed"]
 [connection signal="popup_hide" from="EditorWindow" to="." method="_on_EditorWindow_popup_hide"]
 [connection signal="pressed" from="EditorWindow/VBoxContainer/ChangeImageButton" to="EditorWindow" method="_on_ChangeImageButton_pressed"]

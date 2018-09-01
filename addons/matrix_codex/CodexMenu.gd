@@ -15,9 +15,6 @@ func update_entry_list():
 	for entry in entries:
 		$MainWindow/HBoxContainer/SelectionContainer/EntryList.add_item(entry.title, entry.image)
 
-func _on_EntryList_item_activated(index):
-	display_entry(entries[index])
-
 func display_entry(entry):
 	$MainWindow/HBoxContainer/EntryInspector/Title.text = entry.title
 	$MainWindow/HBoxContainer/EntryInspector/Image.texture = entry.image
@@ -41,3 +38,10 @@ func _on_EditorWindow_popup_hide():
 	$MainWindow.popup_centered()
 	update_entry_list()
 	display_entry($EditorWindow.entry)
+
+func _on_DeleteEntryButton_pressed():
+	currently_selected_entry.delete()
+	update_entry_list()
+
+func _on_EntryList_item_selected(index):
+	display_entry(entries[index])
